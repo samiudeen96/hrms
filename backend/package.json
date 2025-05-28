@@ -5,7 +5,9 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "seed:roles": "node seeders/roleSeeder.js"
+    "seed:roles": "node seeders/roleSeeder.js",
+    "seed:departments": "node seeders/deptSeeder.js",
+    "seed:positions": "node seeders/positionSeeder.js"
   },
   "author": "samiudeen",
   "license": "ISC",

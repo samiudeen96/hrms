@@ -84,7 +84,7 @@ const Register = () => {
 
                     <div className="mt-8">
                         <h2 className='font-semibold mb-3'>Employment details</h2>
-                        <div className="grid grid-cols-4 gap-5">
+                        <div className="grid grid-cols-3 gap-5">
 
                             <div>
                                 <label className="block mb-1 text-sm font-medium text-gray-700">Department<sup className='text-red-400'>*</sup></label>
@@ -106,10 +106,10 @@ const Register = () => {
                                 </div>
                             </div>
 
-                            <div>
+                            {/* <div>
                                 <label className="block mb-1 text-sm font-medium text-gray-700">Employee number<sup className='text-red-400'>*</sup></label>
                                 <input type="text" className='w-full bg-gray-100 sm:p-[10px] p-4 rounded-sm focus:outline-none' placeholder='Enter employee number' />
-                            </div>
+                            </div> */}
 
                             <div>
                                 <label className="block mb-1 text-sm font-medium text-gray-700">Joining date<sup className='text-red-400'>*</sup></label>

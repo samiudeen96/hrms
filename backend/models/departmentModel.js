@@ -10,7 +10,6 @@ export default (sequelize, DataTypes) => {
       dept_code: {
         type: DataTypes.STRING,
         allowNull: true,
-        unique: true,
       },
       name: {
         type: DataTypes.STRING,
@@ -32,6 +31,7 @@ export default (sequelize, DataTypes) => {
   );
 
 
+  
   
 
   return Department;
