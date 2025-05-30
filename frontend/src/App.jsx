@@ -9,6 +9,9 @@ import { Toaster } from 'react-hot-toast';
 import Signup from './pages/auth/Signup';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useEmpInfo } from './hooks/empHook';
+import { getRedirectPathByRole } from './utils/helper';
+import { useNavigate } from "react-router-dom";
 
 function App() {
 
@@ -44,15 +47,27 @@ function App() {
 }
 
 function Root() {
-  const { token, role, isAuthenticated } = useSelector((state) => state.auth);
+  const { role, isAuthenticated } = useSelector((state) => state.auth);
+  const { data: employee, refetch } = useEmpInfo();
+  const navigate = useNavigate();
 
-  const redirectTo = role === 'admin'
-    ? '/admin/dashboard'
-    : role === 'employee'
-    ? '/employee/dashboard'
-    : '/login';
+  useEffect(() => {
+    if (isAuthenticated) {
+      refetch(); // manually fetch employee data if logged in
+    }
+  }, [isAuthenticated, refetch]);
 
-  return <Navigate to={isAuthenticated ? redirectTo : "/login"} />;
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    } else if (!employee) {
+      navigate("/register");
+    } else {
+      navigate(getRedirectPathByRole(role));
+    }
+  }, [isAuthenticated, employee, role, navigate]);
+
+  return null; // since we're redirecting imperatively
 }
 
 export default App

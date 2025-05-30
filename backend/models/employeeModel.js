@@ -46,7 +46,6 @@ export default (sequelize, DataTypes) => {
       },
       gender: {
         type: DataTypes.ENUM("Male", "Female"),
-        // defaultValue: "Male",
         allowNull: false,
       },
       dob: {
@@ -54,11 +53,11 @@ export default (sequelize, DataTypes) => {
         allowNull: false,
       },
       phone: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         allowNull: false,
       },
       emg_contact: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         allowNull: false,
       },
     },
@@ -68,20 +67,15 @@ export default (sequelize, DataTypes) => {
     }
   );
 
-  // Add a hook to generate emp_code
-  Employee.beforeCreate(async (employee, options) => {
-    // Get the department model
+  // Hook to auto-generate emp_code after employee is created
+  Employee.afterCreate(async (employee, options) => {
     const Department = sequelize.models.Department;
 
-    // Get the department code like "IT"
     const getDept = await Department.findByPk(employee.dept_id);
+    const dept_code = getDept?.sub_name || "GEN";
 
-    const dept_code = getDept?.sub_name || "GEN"; 
-
-    // Extract year from joining_date
     const year = new Date(employee.joining_date).getFullYear();
 
-    // Count how many employees already joined in that dept/year
     const count = await Employee.count({
       where: {
         dept_id: employee.dept_id,
@@ -94,8 +88,12 @@ export default (sequelize, DataTypes) => {
       },
     });
 
-    const counter = String(count + 1).padStart(4, "0");
-    employee.emp_code = `EMP-${dept_code}-${year}-${counter}`;
+    const counter = String(count).padStart(4, "0"); // count already includes this record
+    const generatedCode = `EMP-${dept_code}-${year}-${counter}`;
+
+    // Update employee's emp_code
+    employee.emp_code = generatedCode;
+    await employee.save({ transaction: options.transaction }); 
   });
 
   return Employee;

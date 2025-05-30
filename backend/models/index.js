@@ -35,10 +35,16 @@ db.Position = positionModel(sequelize, Sequelize.DataTypes);
 db.Address = addressModel(sequelize, DataTypes);
 db.Employee = employeeModel(sequelize, DataTypes);
 
+// role
 db.Role.hasMany(db.User, { foreignKey: "role_id" }); // One Role → Many Users
-db.User.belongsTo(db.Role, { foreignKey: "role_id" }); // Each User → One Role
+db.User.belongsTo(db.Role, { foreignKey: "role_id", as: 'role' }); // Each User → One Role
 
-db.Department.hasMany(db.Position, { foreignKey: "dept_id" });
+// In User model (optional but recommended)
+db.User.hasOne(db.Employee, { foreignKey: "user_id", as: 'employee' });
+// In Employee model
+db.Employee.belongsTo(db.User, { foreignKey: "user_id", as: 'user' });
+
+db.Department.hasMany(db.Position, { foreignKey: "dept_id", as: "positions" });
 db.Position.belongsTo(db.Department, { foreignKey: "dept_id" });
 
 db.Employee.belongsTo(db.Department, { foreignKey: "dept_id" });

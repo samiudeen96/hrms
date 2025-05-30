@@ -6,10 +6,13 @@ import { Link, useNavigate } from "react-router-dom"
 import Title from '../../components/Title';
 import toast from 'react-hot-toast';
 import { useLogin } from '../../hooks/authHook';
+import { useEmpInfo } from '../../hooks/empHook';
+import { getRedirectPathByRole } from "../../utils/helper.js"
 
 const Login = () => {
   const loginCredential = useLogin();
   const navigate = useNavigate();
+  const { refetch: fetchEmpInfo } = useEmpInfo();
   const initialData = {
     email: '',
     password: '',
@@ -27,15 +30,17 @@ const Login = () => {
     loginCredential.mutate(
       formData,
       {
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
           toast.success('Login successfully');
-          console.log(data);
-          const redirectTo = data.user.role === 'admin' ? '/admin/dashboard' : '/employee/dashboard'
-          navigate(redirectTo)
+
+          const { data: empData } = await fetchEmpInfo();
+          const redirectTo = !empData ? "/register" : getRedirectPathByRole(data.user.role)
+          navigate(redirectTo);
+
         },
         onError: (error) => {
           const message = error?.response?.data?.message || error.message || "Something went wrong";
-          toast.error(message)
+          toast.error(message);
         }
       }
     )

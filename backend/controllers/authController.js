@@ -15,7 +15,8 @@ const createToken = (user) => {
 
 const signup = async (req, res) => {
   try {
-    const { name, email, password, profile_picture, role_id, status } = req.body;
+    const { name, email, password, profile_picture, role_id, status } =
+      req.body;
 
     // make fields are required
 
@@ -74,7 +75,7 @@ const signup = async (req, res) => {
       password: hashedPwd,
       profile_picture,
       role_id,
-      status
+      status,
     };
 
     // console.log(newUser);
@@ -144,8 +145,9 @@ const login = async (req, res) => {
         user: {
           id: user.id,
           name: user.name,
+          profile_picture: user.profile_picture,
           role: user.Role.name,
-          status: user.status
+          status: user.status,
         },
       });
     } else {
