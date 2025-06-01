@@ -36,7 +36,7 @@ db.Address = addressModel(sequelize, DataTypes);
 db.Employee = employeeModel(sequelize, DataTypes);
 
 // role
-db.Role.hasMany(db.User, { foreignKey: "role_id" }); // One Role → Many Users
+db.Role.hasMany(db.User, { foreignKey: "role_id",  }); // One Role → Many Users
 db.User.belongsTo(db.Role, { foreignKey: "role_id", as: 'role' }); // Each User → One Role
 
 // In User model (optional but recommended)

@@ -12,10 +12,10 @@ import { useSelector } from 'react-redux';
 import { useEmpInfo } from './hooks/empHook';
 import { getRedirectPathByRole } from './utils/helper';
 import { useNavigate } from "react-router-dom";
+import InfoModal from "./components/InfoModel"
 
 function App() {
-
-
+  const infoModal = useSelector(state => state.infoModal.isModalOpen)
   return (
     <>
       <Toaster
@@ -42,6 +42,8 @@ function App() {
 
         </Routes>
       </Router>
+
+      {infoModal && <InfoModal />}
     </>
   )
 }

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import SignupLottie from '../../lottie/SignupLottie';
-import logo from "../../assets/logo.svg";
+import { logo } from '../../assets/index.js';
 
 import { Link, useNavigate } from "react-router-dom"
 import Title from '../../components/Title';
@@ -8,6 +7,7 @@ import toast from 'react-hot-toast';
 import { useLogin } from '../../hooks/authHook';
 import { useEmpInfo } from '../../hooks/empHook';
 import { getRedirectPathByRole } from "../../utils/helper.js"
+import IntroLottie from '../../lottie/IntoLottie';
 
 const Login = () => {
   const loginCredential = useLogin();
@@ -51,7 +51,7 @@ const Login = () => {
       <div className='min-[1280px]:w-7/12 grid grid-cols-2 w-11/12 max-[760px]:grid-cols-1 items-center sm:p-5 p-2'>
         <div className="sm:flex-1 w-full flex flex-col items-center">
           <img src={logo} className='w-50 h-20' alt="" />
-          <SignupLottie />
+          <IntroLottie />
         </div>
         <div className="sm:flex-1 w-full rounded-md flex flex-col items-center sm:mt-0 mt-5">
 
@@ -78,9 +78,9 @@ const Login = () => {
               />
             </div>
 
-            <button className='w-full bg-[#f7b35b] sm:p-[10px] p-4 rounded-sm text-white'>Login</button>
+            <button className='w-full bg-primary sm:p-[10px] p-4 rounded-sm text-white'>Login</button>
 
-            <p className='text-sm text-center'>Not a member?{" "}<Link to="/employee/signup" className="text-[#f7b35b] font-bold">Signup</Link></p>
+            <p className='text-sm text-center'>Not a member?{" "}<Link to="/employee/signup" className="text-primary font-bold">Signup</Link></p>
           </form>
         </div>
       </div>

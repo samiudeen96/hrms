@@ -71,19 +71,21 @@ const getEmpInfo = async (req, res) => {
       where: { user_id: id },
       include: [
         {
-          model: User, as: "user",
+          model: User,
+          as: "user", // alias used when associating User with Employee
           attributes: ["name", "profile_picture", "status"],
           include: [
             {
-              model: Role, as: "role",
-              attributes: ["name"], // ⬅ this gives you the role name
+              model: Role,
+              as: "role", // ✅ use the alias defined in your association
+              attributes: ["name"],
             },
           ],
         },
       ],
     });
 
-    console.log(empInfo);
+    // console.log(empInfo);
 
     res.status(201).json({
       success: true,

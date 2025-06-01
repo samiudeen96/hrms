@@ -2,17 +2,17 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import hrLottie from '../assets/json/hrLottie.json';
 import hr from '../assets/json/hr.json';
 
-const SignupLottie = () => {
+const IntroLottie = () => {
   return (
     <div className="">
       <Player
         autoplay
         loop
         src={hr}
-        style={{ height: '240px', width: '240px' }}
+        style={{ height: '280px', width: '280px' }}
       />
     </div>
   );
 };
 
-export default SignupLottie;
+export default IntroLottie;

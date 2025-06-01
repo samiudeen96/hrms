@@ -6,7 +6,8 @@ const getAllDepartments = async (req, res) => {
   try {
     const data = await Department.findAll({
       include: {
-        model: Position, as: "positions",
+        model: Position,
+        as: "positions",
         attributes: ["id", "name"], // Optional: limit returned fields
       },
     });

@@ -124,7 +124,10 @@ const login = async (req, res) => {
 
     const user = await User.findOne({
       where: { email: nornalizedEmail },
-      include: Role,
+      include: {
+        model: Role,
+        as: "role",
+      },
     });
 
     if (!user) {
@@ -146,7 +149,7 @@ const login = async (req, res) => {
           id: user.id,
           name: user.name,
           profile_picture: user.profile_picture,
-          role: user.Role.name,
+          role: user.role.name,
           status: user.status,
         },
       });

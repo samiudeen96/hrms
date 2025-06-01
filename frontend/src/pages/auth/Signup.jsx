@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { routes } from "../../utils/helper.js";
 import { useLocation, useNavigate } from "react-router-dom";
-import SignupLottie from '../../lottie/SignupLottie';
-import logo from "../../assets/logo.svg";
+import { logo } from '../../assets/index.js';
 import { Link } from "react-router-dom";
 import Title from "../../components/Title";
 import toast from 'react-hot-toast';
 import { useSignup } from '../../hooks/authHook';
+import IntroLottie from '../../lottie/IntoLottie';
 
 const Signup = () => {
   const location = useLocation();
@@ -65,7 +65,7 @@ const Signup = () => {
       <div className='min-[1280px]:w-7/12 grid grid-cols-2 w-11/12 max-[760px]:grid-cols-1 items-center sm:p-5 p-2'>
         <div className=" w-full flex flex-col items-center">
           <img src={logo} className='w-50 h-20' alt="" />
-          <SignupLottie />
+          <IntroLottie />
         </div>
         <div className="w-full rounded-md flex flex-col items-center sm:mt-0 mt-5">
 
@@ -115,9 +115,9 @@ const Signup = () => {
               />
             </div>
 
-            <button className='w-full bg-[#f7b35b] sm:p-[10px] p-4 rounded-sm text-white'>Signup</button>
+            <button className='w-full bg-primary sm:p-[10px] p-4 rounded-sm text-white'>Signup</button>
 
-            <p className='text-sm text-center'>Already have an account?{" "}<Link to="/login" className="text-[#f7b35b] font-bold">Login</Link></p>
+            <p className='text-sm text-center'>Already have an account?{" "}<Link to="/login" className="text-primary font-bold">Login</Link></p>
 
           </form>
         </div>

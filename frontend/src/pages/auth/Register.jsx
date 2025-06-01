@@ -76,9 +76,9 @@ const Register = () => {
                     <h2 className='font-semibold mb-3'>Basic details</h2>
                     <div className='grid grid-cols-4 gap-5'>
                         <div className='flex gap-2 '>
-                            <div className='bg-gray-100 rounded-full w-14 h-14 border-3 border-[#f7b35b] flex items-center justify-center relative'>
+                            <div className='bg-gray-100 rounded-full w-14 h-14 border-3 border-primary flex items-center justify-center relative'>
                                 <BiUser className='w-8 h-8 text-white' />
-                                <div className='absolute bottom-0 right-0 p-1 bg-[#f7b35b] rounded-full cursor-pointer'>
+                                <div className='absolute bottom-0 right-0 p-1 bg-primary rounded-full cursor-pointer'>
                                     <IoCameraOutline className='w-4 h-4 text-white' />
                                 </div>
                             </div>
@@ -132,10 +132,10 @@ const Register = () => {
                                             onChangeHandler({
                                                 target: { name: "gender", value: item.name },
                                             })
-                                        }} className={`w-12 h-12 rounded-full border-3 cursor-pointer ${formData.gender === item.name ? 'border-[#f7b35b]' : 'border-gray-100'}`}>
+                                        }} className={`w-12 h-12 rounded-full border-3 cursor-pointer ${formData.gender === item.name ? 'border-primary' : 'border-gray-100'}`}>
                                             <img src={item.img} alt={item.name} />
                                         </div>
-                                        <p className={`${formData.gender === item.name ? 'text-[#f7b35b]' : ''}`}>{item.name}</p>
+                                        <p className={`${formData.gender === item.name ? 'text-primary' : ''}`}>{item.name}</p>
                                     </div>
                                 ))}
                             </div>
@@ -301,7 +301,7 @@ const Register = () => {
                         </div>
 
                         <div className='flex justify-end mt-6'>
-                            <button className='px-10 py-2 bg-[#f7b35b] text-white rounded-sm'>Save</button>
+                            <button className='px-10 py-2 bg-primary text-white rounded-sm'>Save</button>
                         </div>
                     </div>
                 </form>

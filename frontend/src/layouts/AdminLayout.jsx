@@ -1,10 +1,13 @@
-import React from 'react'
-import { Outlet } from "react-router-dom"
+import SideBar from '../components/SideBar'
+import Content from '../components/Content'
 
 const AdminLayout = () => {
   return (
-    <div><Outlet /></div>
+    <div className='flex '>
+      <><SideBar /></>
+      <><Content /></>
+    </div>
   )
 }
 
-export default AdminLayout
+export default AdminLayout;

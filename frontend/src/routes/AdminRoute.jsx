@@ -2,6 +2,7 @@ import { Route } from "react-router-dom";
 import AdminLayout from '../layouts/AdminLayout';
 import Dashboard from '../pages/admin/Dashboard';
 import PrivateRoute from "./PrivateRoute";
+import Employee from "../pages/admin/Employee";
 
 const AdminRoute = () => {
     return (
@@ -12,10 +13,8 @@ const AdminRoute = () => {
                     allowedRole={['admin']}>
                     <AdminLayout />
                 </PrivateRoute>}>
-            <Route
-                path="/admin/dashboard"
-                element={<Dashboard />}
-            />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="employees" element={<Employee />} />
         </Route>
     )
 }
