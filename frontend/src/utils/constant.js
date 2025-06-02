@@ -7,48 +7,6 @@ import { MdOutlineLogout } from "react-icons/md";
 
 // admin properties
 export const adminMenu = [
-  // {
-  //   name: "Dashboard",
-  //   icon: MdOutlineDashboard,
-  //   path: "/admin/dashboard",
-  // },
-  // {
-  //   header: "Employee Management",
-  //   name: "Employee",
-  //   icon: LiaUserTieSolid,
-  //   path: "/admin/employees",
-  //   children: [
-  //     {
-  //       name: "View employees"
-  //     }
-  //   ]
-  //   // children: [
-  //   //   {
-  //   //     name: "Employees",
-  //   //     child: [
-  //   //       {
-  //   //         name: "View employees",
-  //   //       },
-  //   //     ],
-  //   //   },
-  //   //   {
-  //   //     name: "Departments",
-  //   //     child: [
-  //   //       {
-  //   //         name: "Add department",
-  //   //       },
-  //   //     ],
-  //   //   },
-  //   //   {
-  //   //     name: "Positions",
-  //   //     child: [
-  //   //       {
-  //   //         name: "Add position",
-  //   //       },
-  //   //     ],
-  //   //   },
-  //   // ],
-  // },
   {
     menu: [
       {
@@ -65,33 +23,112 @@ export const adminMenu = [
         name: "Employee",
         icon: LiaUserTieSolid,
         path: "/admin/employees",
-        children: [
-          {
-            name: "View employees",
-            path: "/admin/employees",
-          },
-          {
-            name: "Manage employees",
-          }
-        ],
       },
       {
         name: "Department",
         icon: PiTreeViewThin,
-        path: "",
       },
       {
-        name: "Position",
-        icon: LiaUserCogSolid,
-        path: "",
+        name: "Attendance",
+        icon: PiTreeViewThin,
+        children: [
+          {
+            name: "Daily Attendance",
+            path: "/admin/attendance",
+          },
+          {
+            name: "Employee-wise Logs",
+          },
+          {
+            name: "Manual Entry",
+          },
+        ],
       },
+      {
+        name: "Leaves",
+        icon: PiTreeViewThin,
+        children: [
+          {
+            name: "Leave Requests",
+          },
+          {
+            name: "Leave History",
+          },
+          {
+            name: "Leave Reports",
+          },
+        ],
+      },
+      {
+        name: "Projects",
+        icon: PiTreeViewThin,
+        children: [
+          {
+            name: "Projects",
+          },
+          {
+            name: "Tasks",
+          },
+        ],
+      },
+
+      {
+        name: "Payroll",
+        icon: PiTreeViewThin,
+        children: [
+          {
+            name: "Generate Payroll",
+          },
+          {
+            name: "Pay Slips",
+          },
+        ],
+      },
+
+      {
+        name: "Performance",
+        icon: PiTreeViewThin,
+      },
+      {
+        name: "Documents",
+        icon: PiTreeViewThin,
+      },
+      {
+        name: "Announcements",
+        icon: PiTreeViewThin,
+      },
+      {
+        name: "Resignations",
+        icon: PiTreeViewThin,
+      },
+      {
+        name: "Holidays",
+        icon: PiTreeViewThin,
+      },
+      {
+        name: "Notifications",
+        icon: PiTreeViewThin,
+      },
+      {
+        name: "Settings",
+        icon: PiTreeViewThin,
+      }
+
+      //       Tasks
+      // ├── All Tasks
+      // ├── Assign Task
     ],
   },
-  {
-    name: "Logout",
-    action: "logout",
-    icon: MdOutlineLogout,
-  },
+  // {
+  //   name: "Logout",
+  //   action: "logout",
+  //   icon: MdOutlineLogout,
+  // },
 ];
 
 // employee properties
+
+// Attendance
+// ├── Daily Attendance
+// ├── Employee-wise Logs
+// ├── Manual Entry

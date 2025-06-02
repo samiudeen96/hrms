@@ -16,7 +16,7 @@
 @layer base {
   html {
     font-family: var(--font-display);
-    color: var(--color-text);
+    /* color: var(--color-text); */
   }
 
   button {
@@ -51,10 +51,30 @@
     content: "";
     position: absolute;
     top: 15px;
-    left: 15.6px;
-    width: 3px;
+    left: 17.5px;
+    width: 2px;
     height: 100%;
     background: #ebe6e7;
     z-index: 0;
   }
+}
+
+
+/* GLOBAL SCROLLBAR STYLES */
+
+/* Scrollbar track */
+::-webkit-scrollbar {
+  width: 4px;              /* 👈 change this value to make it thinner or thicker */
+  height: 4px;             /* for horizontal scrollbar */
+}
+
+/* Scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.4);
+  border-radius: 3px;
+}
+
+/* Optional: scrollbar background */
+::-webkit-scrollbar-track {
+  background: transparent;
 }

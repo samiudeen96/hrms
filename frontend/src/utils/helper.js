@@ -46,3 +46,9 @@ export const convertedName = (name) => {
     ? `${mergedFirstName} ${mergedSecondName}`
     : mergedFirstName;
 };
+
+
+export function pathName(name) {
+  const location = window.location.pathname;
+  return location === name;
+}
