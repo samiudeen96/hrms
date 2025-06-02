@@ -2,7 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isModalOpen: false,
-  infoContent: {},
+  infoContent: {
+    text1: "",
+    text2: "",
+    buttonName: "",
+    color: "",
+    actionType: "",
+    onConfirm: null, // Add callback storage
+  },
 };
 
 const infoModalSlice = createSlice({
@@ -10,12 +17,20 @@ const infoModalSlice = createSlice({
   initialState,
   reducers: {
     modalOpen: (state, action) => {
-      state.infoContent = action.payload;
-
+      state.infoContent = {
+        text1: action.payload.text1,
+        text2: action.payload.text2,
+        buttonName: action.payload.buttonName,
+        color: action.payload.color,
+        actionType: action.payload.actionType,
+        onConfirm: action.payload.onConfirm, // Store the callback
+      };
       state.isModalOpen = true;
     },
     modalClose: (state) => {
       state.isModalOpen = false;
+      // Reset the callback when closing
+      state.infoContent.onConfirm = null;
     },
   },
 });
