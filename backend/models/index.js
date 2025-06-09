@@ -1,11 +1,10 @@
 import Sequelize, { DataTypes } from "sequelize";
 import dbConfig from "../config/dbConfig.js";
-import userModel from "./userModel.js";
+import tenantModel from "./tenantModel.js";
 import roleModel from "./roleModel.js";
+import userModal from "./userModal.js";
 import departmentModel from "./departmentModel.js";
 import positionModel from "./positionModel.js";
-import addressModel from "./addressModel.js";
-import employeeModel from "./employeeModel.js";
 
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
@@ -28,27 +27,16 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+db.Tenant = tenantModel(sequelize, Sequelize.DataTypes);
 db.Role = roleModel(sequelize, Sequelize.DataTypes);
-db.User = userModel(sequelize, Sequelize.DataTypes);
+db.User = userModal(sequelize, Sequelize.DataTypes);
 db.Department = departmentModel(sequelize, Sequelize.DataTypes);
-db.Position = positionModel(sequelize, Sequelize.DataTypes);
-db.Address = addressModel(sequelize, DataTypes);
-db.Employee = employeeModel(sequelize, DataTypes);
+db.Position = positionModel(sequelize, Sequelize)
 
-// role
-db.Role.hasMany(db.User, { foreignKey: "role_id",  }); // One Role → Many Users
-db.User.belongsTo(db.Role, { foreignKey: "role_id", as: 'role' }); // Each User → One Role
+db.Role.hasMany(db.Tenant, { foreignKey: "role_id" });
+db.Tenant.belongsTo(db.Role, { as: "role", foreignKey: "role_id" });
 
-// In User model (optional but recommended)
-db.User.hasOne(db.Employee, { foreignKey: "user_id", as: 'employee' });
-// In Employee model
-db.Employee.belongsTo(db.User, { foreignKey: "user_id", as: 'user' });
-
-db.Department.hasMany(db.Position, { foreignKey: "dept_id", as: "positions" });
-db.Position.belongsTo(db.Department, { foreignKey: "dept_id" });
-
-db.Employee.belongsTo(db.Department, { foreignKey: "dept_id" });
-db.Employee.belongsTo(db.Position, { foreignKey: "position_id" });
-db.Address.belongsTo(db.Employee, { foreignKey: "emp_id" });
+db.Role.hasMany(db.User, { foreignKey: "role_id" });
+db.User.belongsTo(db.Role, { as: "role", foreignKey: "role_id" });
 
 export default db;

@@ -7,7 +7,7 @@ import PrivateRoute from '../routes/PrivateRoute';
 const EmployeeRoute = () => {
     return (
         <Route
-            path='/employee'
+            path='/employee/*'
             element={
                 <PrivateRoute
                     allowedRole={['employee']}>
@@ -15,7 +15,7 @@ const EmployeeRoute = () => {
                 </PrivateRoute>
             }>
 
-            <Route path="/employee/dashboard" element={<Dashboard />} />
+            <Route path="dashboard" element={<Dashboard />} />
         </Route>
     )
 }

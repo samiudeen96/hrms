@@ -14,6 +14,7 @@ export default (sequelize, DataTypes) => {
           model: "departments",
           key: "id",
         },
+        onDelete: "CASCADE",
       },
       name: {
         type: DataTypes.STRING,

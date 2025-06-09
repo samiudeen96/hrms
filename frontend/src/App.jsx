@@ -1,75 +1,55 @@
-
-import './App.css'
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import AdminRoute from './routes/AdminRoute'
-import EmployeeRoute from './routes/EmployeeRoute';
+import { BrowserRouter as Router, Routes, Route, Navigate, } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import Signup from "./pages/auth/Signup";
 import Login from "./pages/auth/Login";
-import Register from './pages/auth/Register';
-import { Toaster } from 'react-hot-toast';
-import Signup from './pages/auth/Signup';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useEmpInfo } from './hooks/empHook';
-import { getRedirectPathByRole } from './utils/helper';
-import { useNavigate } from "react-router-dom";
-import InfoModal from "./components/InfoModel"
+import { getRedirectPathByRole } from "./utils/helper";
+import { useSelector } from "react-redux";
+import InfoModal from "./components/InfoModal"
+import AdminRoute from "./routes/AdminRoute";
+import UserLogin from "./pages/auth/UserLogin";
+import EmployeeRoute from "./routes/EmployeeRoute";
+import HrRoute from "./routes/HrRoute";
 
 function App() {
   const infoModal = useSelector(state => state.infoModal.isModalOpen)
   return (
     <>
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-      />
+      <Toaster position="top-center" reverseOrder={false} />
       <Router>
         <Routes>
-
-          {/* PublicRoutes */}
+          {/* Public Routes */}
           <Route path="/admin/signup" element={<Signup />} />
-          <Route path="/employee/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<UserLogin />} />
+          <Route path="/admin/login" element={<Login />} />
           <Route path="/" element={<Root />} />
 
-          {/* Admin Routes */}
+          {/* Admin/Employer Routes */}
           {AdminRoute()}
 
-          {/* Employee Routes */}
+           {/* employee/Employee Routes */}
           {EmployeeRoute()}
 
-          {/* Public Routes */}
+          {/* hr/Hr Routes */}
+          {HrRoute()}
 
         </Routes>
       </Router>
-
       {infoModal && <InfoModal />}
     </>
-  )
-}
+  );
+};
 
-function Root() {
-  const { role, isAuthenticated } = useSelector((state) => state.auth);
-  const { data: employee, refetch } = useEmpInfo();
-  const navigate = useNavigate();
+export default App;
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      refetch(); // manually fetch employee data if logged in
-    }
-  }, [isAuthenticated, refetch]);
+const Root = () => {
+  const { loggedData, isAuthenticated } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-    } else if (!employee) {
-      navigate("/register");
-    } else {
-      navigate(getRedirectPathByRole(role));
-    }
-  }, [isAuthenticated, employee, role, navigate]);
+  if (!isAuthenticated || !loggedData?.role) {
+    return <Navigate to="/login" replace />;
+  }
 
-  return null; // since we're redirecting imperatively
-}
+  const redirectTo = getRedirectPathByRole(loggedData?.role || "");
+  
 
-export default App
+  return <Navigate to={redirectTo} replace />;
+};

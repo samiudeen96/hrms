@@ -2,10 +2,9 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import db from "./models/index.js";
-import authRouter from "./routes/authRoute.js";
-import departmentRouter from "./routes/departmentRoute.js";
-import { requireAuth } from "./middleware/requireAuth.js";
-import employeeRouter from "./routes/employeeRoute.js";
+import userRouter from "./routes/userRoute.js";
+import tenantRouter from "./routes/tenantRouter.js";
+import deptRouter from "./routes/departmentRouter.js";
 dotenv.config();
 
 db.sequelize.sync(); // Create if not exists
@@ -25,12 +24,11 @@ app.get("/", (req, res) => {
 
 // routes
 
-app.use("/api/auth", authRouter);
+app.use("/api/tenant", tenantRouter);
 
-app.use('/api/department', departmentRouter)
+app.use("/api/user", userRouter)
 
-employeeRouter.use(requireAuth);
-app.use('/api/employee', employeeRouter)
+app.use("/api/dept", deptRouter)
 
 const port = process.env.PORT;
 app.listen(port, () => {

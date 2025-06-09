@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { logo } from '../../assets/index.js';
-
-import { Link, useNavigate } from "react-router-dom"
-import Title from '../../components/Title';
+import IntroLottie from "../../components/lottie/IntroLottie.jsx"
+import Title from '../../components/Title.jsx';
+import { useLogin } from '../../hooks/authHook.js';
 import toast from 'react-hot-toast';
-import { useLogin } from '../../hooks/authHook';
-import { useEmpInfo } from '../../hooks/empHook';
 import { getRedirectPathByRole } from "../../utils/helper.js"
-import IntroLottie from '../../lottie/IntoLottie';
 
 const Login = () => {
-  const loginCredential = useLogin();
-  const navigate = useNavigate();
-  const { refetch: fetchEmpInfo } = useEmpInfo();
+
+  const login = useLogin();
+
   const initialData = {
     email: '',
     password: '',
   }
+
   const [formData, setFormData] = useState(initialData)
+   const navigate = useNavigate();
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -26,24 +26,19 @@ const Login = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    // console.log(formData);
-    loginCredential.mutate(
-      formData,
-      {
-        onSuccess: async (data) => {
-          toast.success('Login successfully');
-
-          const { data: empData } = await fetchEmpInfo();
-          const redirectTo = !empData ? "/register" : getRedirectPathByRole(data.user.role)
-          navigate(redirectTo);
-
-        },
-        onError: (error) => {
-          const message = error?.response?.data?.message || error.message || "Something went wrong";
-          toast.error(message);
-        }
+    login.mutate(formData, {
+      onSuccess: (data) => {
+        console.log(data);
+        toast.success('Login successfully');
+        setFormData(initialData);
+        const redirectTo = getRedirectPathByRole(data.loggedData.role)
+        navigate(redirectTo);
+      },
+      onError: (error) => {
+        const message = error?.response?.data?.message || error.message || "Something went wrong";
+        toast.error(message);
       }
-    )
+    })
   }
 
   return (
@@ -80,7 +75,7 @@ const Login = () => {
 
             <button className='w-full bg-primary sm:p-[10px] p-4 rounded-sm text-white'>Login</button>
 
-            <p className='text-sm text-center'>Not a member?{" "}<Link to="/employee/signup" className="text-primary font-bold">Signup</Link></p>
+            <p className='text-sm text-center'>Not a member?{" "}<Link to="/admin/signup" className="text-primary font-bold">Signup</Link></p>
           </form>
         </div>
       </div>

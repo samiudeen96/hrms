@@ -1,5 +1,5 @@
-export default (sequelize, DataTypes) => {
-  const Role = sequelize.define(
+export default (sequlize, DataTypes) => {
+  const Role = sequlize.define(
     "Role",
     {
       id: {
@@ -7,8 +7,13 @@ export default (sequelize, DataTypes) => {
         autoIncrement: true,
         primaryKey: true,
       },
+      uuid: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
       name: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
         allowNull: false,
         unique: true,
       },

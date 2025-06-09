@@ -1,10 +1,14 @@
 import db from "../models/index.js";
 
-const roleSeed = async () => {
+const roleSeeder = async () => {
   try {
     await db.sequelize.sync();
 
-    const roles = [{ name: "admin" }, { name: "employee" }];
+    const roles = [
+      { name: "admin" },
+      { name: "hr_manager" },
+      { name: "employee" },
+    ];
 
     await db.Role.bulkCreate(roles);
     console.log("Roles seeded successfully");
@@ -15,4 +19,4 @@ const roleSeed = async () => {
   }
 };
 
-roleSeed();
+roleSeeder();

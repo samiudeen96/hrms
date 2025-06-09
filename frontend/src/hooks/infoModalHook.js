@@ -8,12 +8,12 @@ export const useInfoModal = () => {
   const showModal = (content) => {
     dispatch(
       modalOpen({
-        text1: content.text1 || content.text, // Support both formats
+        text1: content.text1 || content.text,
         text2: content.text2,
         buttonName: content.buttonName,
         color: content.color || "bg-primary",
-        actionType: content.actionType,
-        onConfirm: content.onConfirm, // Accept callback
+        actionType: content.actionType, // Use actionType only
+        // ❌ Don't pass onConfirm
       })
     );
   };
@@ -29,3 +29,4 @@ export const useInfoModal = () => {
     hideModal,
   };
 };
+

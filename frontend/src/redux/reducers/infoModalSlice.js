@@ -7,8 +7,8 @@ const initialState = {
     text2: "",
     buttonName: "",
     color: "",
-    actionType: "",
-    onConfirm: null, // Add callback storage
+    actionType: "", // Keep this
+    // ❌ Remove onConfirm from here
   },
 };
 
@@ -23,17 +23,16 @@ const infoModalSlice = createSlice({
         buttonName: action.payload.buttonName,
         color: action.payload.color,
         actionType: action.payload.actionType,
-        onConfirm: action.payload.onConfirm, // Store the callback
       };
       state.isModalOpen = true;
     },
     modalClose: (state) => {
       state.isModalOpen = false;
-      // Reset the callback when closing
-      state.infoContent.onConfirm = null;
+      state.infoContent = initialState.infoContent;
     },
   },
 });
+
 
 export const { modalOpen, modalClose } = infoModalSlice.actions;
 export default infoModalSlice.reducer;

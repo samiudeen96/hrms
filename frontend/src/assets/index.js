@@ -3,3 +3,4 @@ import female from "../assets/female.svg";
 import logo from "../assets/logo.svg"
 
 export { male, female, logo };
+

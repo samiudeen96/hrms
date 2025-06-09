@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom"
 
 const Content = () => {
-    return (
-        <div className='grow p-5 bg-background'><Outlet /></div>
-    )
+  return (
+    <div className=""><Outlet /></div>
+  )
 }
 
 export default Content;

@@ -7,6 +7,11 @@ export default (sequelize, DataTypes) => {
         autoIncrement: true,
         primaryKey: true,
       },
+      uuid: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
       dept_code: {
         type: DataTypes.STRING,
         allowNull: true, // Will be generated after creation
@@ -14,6 +19,7 @@ export default (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
       sub_name: {
         type: DataTypes.STRING(10),
