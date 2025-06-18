@@ -1,7 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import Tabs from "../../../components/Tabs";
-import ManageDepartment from "./ManageDepartment";
 import EmployeeWise from "./EmployeeWise";
+import AddDepartment from "./addDepartment";
+import Departments from "./Departments";
 
 const DepartmentTab = () => {
   return (
@@ -9,17 +10,20 @@ const DepartmentTab = () => {
       <Tabs basePath="/admin/department" tabs={tabs} />
 
       <Routes>
-        <Route path="manage" element={<ManageDepartment />} />
-        <Route path="list" element={<EmployeeWise />} />
-        <Route index element={<ManageDepartment />} /> {/* default tab */}
+        <Route path="list" element={<Departments />} />
+        <Route path="add" element={<AddDepartment />} />
+        <Route path="emplist" element={<EmployeeWise />} />
+        <Route index element={<Departments />} /> {/* default tab */}
       </Routes>
     </>
   );
 };
 
+
 const tabs = [
-  { label: "Manage Department", path: "manage" },
-  { label: "Employee-wise", path: "list" },
+  { label: "Departments", path: "list" },
+  { label: "Add Department", path: "add" },
+  { label: "Employee-wise", path: "emplist" },
 ];
 
 export default DepartmentTab

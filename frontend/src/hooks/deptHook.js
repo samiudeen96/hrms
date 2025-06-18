@@ -4,8 +4,12 @@ import {
   createDeptFn,
   createPositionFn,
   deptListFn,
+  positionListFn,
+  userDeptListFn,
+  userPositionListFn,
 } from "../services/departmentServices";
 
+// admin list
 export const useDptCreate = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -13,6 +17,13 @@ export const useDptCreate = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["department"] });
     },
+  });
+};
+
+export const useDeptList = () => {
+  return useQuery({
+    queryKey: ["deptList"],
+    queryFn: deptListFn,
   });
 };
 
@@ -26,9 +37,23 @@ export const usePositionCreate = () => {
   });
 };
 
-export const useDeptList = () => {
+export const usePositionList = () => {
   return useQuery({
-    queryKey: ["deptList"],
-    queryFn: deptListFn,
+    queryKey: ["positionList"],
+    queryFn: positionListFn,
+  });
+};
+
+export const useUserDeptList = () => {
+  return useQuery({
+    queryKey: ["userDeptList"],
+    queryFn: userDeptListFn,
+  });
+};
+
+export const useUserPositionList = () => {
+  return useQuery({
+    queryKey: ["userPositionList"],
+    queryFn: userPositionListFn,
   });
 };

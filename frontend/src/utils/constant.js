@@ -10,6 +10,9 @@ import { HiOutlineSpeakerphone } from "react-icons/hi";
 import { TbUsers } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
 
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import { IoPauseSharp } from "react-icons/io5";
+
 export const roleMenus = {
   admin: [
     {
@@ -35,21 +38,31 @@ export const roleMenus = {
           ],
         },
         {
+          name: "Employee",
+          icon: TbUsers,
+          path: "/admin/employee/list",
+          children: [
+            { name: "Employees", path: "/admin/employee/list" },
+            { name: "Add Employee", path: "/admin/employee/add" },
+          ],
+        },
+        {
           name: "Department",
           icon: PiTreeViewBold,
-          path: "/admin/department/manage",
+          path: "/admin/department/list",
           children: [
-            { name: "Manage Department", path: "/admin/department/manage" },
-            { name: "Employee-wise", path: "/admin/department/list" },
+            { name: "Departments", path: "/admin/department/list" },
+            { name: "Add Department", path: "/admin/department/add" },
+            { name: "Employee-wise", path: "/admin/department/emplist" },
           ],
         },
         {
           name: "Attendance",
           icon: LiaCalendarCheckSolid,
           children: [
-            { name: "Daily Attendance", path: "/admin/attendance/daily" },
-            { name: "Employee-wise Logs", path: "/admin/attendance/logs" },
-            { name: "Manual Entry", path: "/admin/attendance/manual" },
+            { name: "Daily Attendance", path: "/admin/attendance/attendance" },
+            { name: "Reports", path: "/admin/attendance/reports" },
+            { name: "Manual Entry", path: "/admin/attendance/entry" },
           ],
         },
         {
@@ -169,7 +182,11 @@ export const roleMenus = {
         {
           name: "My Attendance",
           icon: LiaCalendarCheckSolid,
-          path: "/employee/attendance",
+          path: "/employee/attendance/entry",
+          children: [
+            { name: "Attendance", path: "/employee/attendance/entry" },
+            { name: "Report", path: "/employee/attendance/report" },
+          ],
         },
         {
           name: "Leave Requests",
@@ -181,28 +198,19 @@ export const roleMenus = {
           icon: IoDocumentsOutline,
           path: "/employee/documents",
         },
+        {
+          name: "Settings",
+          icon: IoSettingsOutline,
+          path: "/employee/settings/profile",
+          children: [
+            { name: "Profile", path: "/employee/settings/profile" },
+            // { name: "Manual Entry", path: "/hr/attendance/manual" },
+          ],
+        },
       ],
     },
   ],
 };
-
-// employee properties
-// export const employeeMenu = [
-//   {
-//     menu: [
-//       {
-//         name: "Dashboard",
-//         icon: MdOutlineDashboard,
-//         path: "/employee/dashboard",
-//       },
-//     ],
-//   },
-//   {
-//     name: "Logout",
-//     action: "logout",
-//     icon: MdOutlineLogout,
-//   },
-// ];
 
 export const headerDropdown = {
   admin: [
@@ -218,7 +226,7 @@ export const headerDropdown = {
     },
   ],
 
-    hr: [
+  hr: [
     {
       name: "Profile",
       icon: LuUser,
@@ -243,6 +251,13 @@ export const headerDropdown = {
       icon: MdOutlineLogout,
     },
   ],
-
-
 };
+
+// export const entryButton = [
+//   {
+//     label: "Check in",
+//     handlerName: "check_in",
+//     bgProp: "bg-green-600 hover:bg-green-700",
+//     icon: IoMdCheckmarkCircleOutline,
+//   },
+// ];

@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import Title from "../../../components/Title"
 import { useDeptList, useDptCreate, usePositionCreate } from '../../../hooks/deptHook';
 import { toast } from 'react-hot-toast';
+import { IoMdAdd } from "react-icons/io";
 
 
-const ManageDepartment = () => {
+const AddDepartment = () => {
 
   const { data: deptList, refetch: refetchDeptList } = useDeptList();
 
@@ -34,7 +35,7 @@ const ManageDepartment = () => {
     }
   }, [formData.deptName, formData.deptName]);
 
-  
+
 
 
 
@@ -115,7 +116,11 @@ const ManageDepartment = () => {
                   onChange={onChangeHandler}
                 // readOnly
                 />
-                <button type="submit" className="button_primary">Add</button>
+                <button type="submit" className="button_primary">
+                  {/* <IoMdAdd className="w-5 h-5" /> */}
+                  <span>Submit</span>
+                </button>
+
               </div>
             </div>
           </div>
@@ -123,49 +128,54 @@ const ManageDepartment = () => {
       </div>
 
       {/* Position Form */}
-      <div>
+      {deptList?.length > 0 &&
+        <div>
+          <Title title={"Add Position"} />
+          <form onSubmit={onPositionSubmit} className="space-y-6">
+            <div className="grid grid-cols-3 gap-6">
+              {/* Select Department */}
+              <div>
+                <label className="label">Select department <sup className="text-red-500">*</sup></label>
+                <div className='select_option'>
+                  <select
+                    className='input'
+                    name="dept_id"
+                    value={formData.dept_id}
+                    onChange={onChangeHandler}
+                  >
+                    <option value="" disabled>Select position</option>
+                    {deptList?.map(item => (
+                      <option key={item.id} value={item.id}>{item.name}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
 
-        <Title title={"Add Position"} />
-        <form onSubmit={onPositionSubmit} className="space-y-6">
-          <div className="grid grid-cols-3 gap-6">
-            {/* Select Department */}
-            <div>
-              <label className="label">Select Department <sup className="text-red-500">*</sup></label>
-              <select
-                className="input"
-                name="dept_id"
-                value={formData.dept_id}
-                onChange={onChangeHandler}
-              >
-                <option value="" disabled>Select position</option>
-                {deptList?.map(item => (
-                  <option key={item.id} value={item.id}>{item.name}</option>
-                ))}
-              </select>
-            </div>
-
-            {/* Position */}
-            <div>
-              <label className="label">Position <sup className="text-red-500">*</sup></label>
-              <div className="flex items-center gap-3">
-                <input
-                  type="text"
-                  className="input"
-                  placeholder="Enter Position"
-                  name="positionName"
-                  value={formData.positionName}
-                  onChange={onChangeHandler}
-                />
-                <button type="submit" className="button_primary">Add</button>
+              {/* Position */}
+              <div>
+                <label className="label">Position <sup className="text-red-500">*</sup></label>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="text"
+                    className="input"
+                    placeholder="Enter Position"
+                    name="positionName"
+                    value={formData.positionName}
+                    onChange={onChangeHandler}
+                  />
+                  <button type="submit" className="button_primary">
+                    {/* <IoMdAdd className="w-5 h-5" /> */}
+                    <span>Submit</span>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </form>
-      </div>
-
+          </form>
+        </div>
+      }
     </div>
 
   )
 }
 
-export default ManageDepartment
+export default AddDepartment

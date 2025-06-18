@@ -1,11 +1,10 @@
 import db from "../models/index.js";
 
-const { Department, Position } = db;
+const { Department, Position, User } = db;
 
 export const createDept = async (req, res) => {
+  const tenant_id = req.user.id;
   try {
-    console.log(req.body);
-
     const { deptName, subDepartment } = req.body;
 
     if (!deptName || !subDepartment) {
@@ -15,13 +14,8 @@ export const createDept = async (req, res) => {
       });
     }
 
-    const newDept = {
-      name: deptName,
-      sub_name: subDepartment,
-    };
-
     const existingName = await Department.findOne({
-      where: { name: deptName },
+      where: { tenant_id, name: deptName },
     });
 
     if (existingName) {
@@ -30,6 +24,12 @@ export const createDept = async (req, res) => {
         message: "Department already exist",
       });
     }
+
+    const newDept = {
+      name: deptName,
+      sub_name: subDepartment,
+      tenant_id,
+    };
 
     await Department.create(newDept);
 
@@ -47,23 +47,28 @@ export const createDept = async (req, res) => {
 };
 
 export const deptList = async (req, res) => {
+  const tenant_id = req.user.id;
+  // console.log(req);
+
   try {
-    const departments = await Department.findAll();
+    const departments = await Department.findAll({
+      where: { tenant_id },
+    });
 
     if (departments.length === 0) {
-      res.status(404).json({
+      return res.status(404).json({
         success: false,
-        message: "List not found",
+        message: "No departments found",
       });
     }
 
-    res.status(201).json({
+    return res.status(200).json({
       success: true,
-      message: "fetched successfully",
+      message: "Fetched successfully",
       departments,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: error.message,
       errors: error.errors || [],
@@ -72,8 +77,9 @@ export const deptList = async (req, res) => {
 };
 
 export const createPosition = async (req, res) => {
+  const tenant_id = req.user.id;
   try {
-    console.log(req.body);
+    // console.log(req.body);
 
     const { dept_id, positionName } = req.body;
 
@@ -92,7 +98,7 @@ export const createPosition = async (req, res) => {
     }
 
     const existingName = await Position.findOne({
-      where: { name: positionName },
+      where: { tenant_id, name: positionName },
     });
 
     if (existingName) {
@@ -105,16 +111,110 @@ export const createPosition = async (req, res) => {
     const newPosition = {
       dept_id,
       name: positionName,
+      tenant_id,
     };
 
     await Position.create(newPosition);
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
       message: "Position created Successfully",
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      errors: error.errors || [],
+    });
+  }
+};
+
+export const positionList = async (req, res) => {
+  const tenant_id = req.user.id;
+  try {
+    const positions = await Position.findAll({ where: { tenant_id } });
+
+    if (positions.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "List not found",
+      });
+    }
+
+    return res.status(201).json({
+      success: true,
+      message: "fetched successfully",
+      positions,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      errors: error.errors || [],
+    });
+  }
+};
+
+export const userDeptList = async (req, res) => {
+  const user_id = req.user.id;
+
+
+  try {
+    const getTenantIdFromUser = await User.findOne({ where: user_id });
+
+    const tenant_id = getTenantIdFromUser.tenant_id;
+
+    const departments = await Department.findAll({
+      where: { tenant_id },
+    });
+
+    if (departments.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No departments found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Fetched successfully",
+      departments,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      errors: error.errors || [],
+    });
+  }
+};
+
+export const userPositionList = async (req, res) => {
+  const user_id = req.user.id;
+
+  
+
+  try {
+    const getTenantIdFromUser = await User.findOne({ where: user_id });
+
+    const tenant_id = getTenantIdFromUser.tenant_id;
+
+    const positions = await Position.findAll({ where: { tenant_id } });
+
+    if (positions.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "List not found",
+      });
+    }
+
+    return res.status(201).json({
+      success: true,
+      message: "fetched successfully",
+      positions,
+    });
+  } catch (error) {
+    return res.status(500).json({
       success: false,
       message: error.message,
       errors: error.errors || [],

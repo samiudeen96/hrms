@@ -7,6 +7,20 @@ export default (sequelize, DataTypes) => {
         autoIncrement: true,
         primaryKey: true,
       },
+      uuid: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+      tenant_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "tenants",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+      },
       dept_id: {
         type: DataTypes.INTEGER,
         allowNull: false,

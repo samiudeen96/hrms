@@ -7,7 +7,7 @@ const { Tenant, Role, User } = db;
 
 const createToken = (data) => {
   return jwt.sign(
-    { id: data.uuid, email: data.email },
+    { id: data.id, email: data.email },
     process.env.JWT_SECRET
   );
 };
@@ -15,7 +15,7 @@ const createToken = (data) => {
 const signup = async (req, res) => {
   // console.log(req.body);
   try {
-    const { name, email, password } = req.body;
+    const { orgName, name, email, password } = req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({
@@ -67,6 +67,7 @@ const signup = async (req, res) => {
     const hashedPwd = await bcrypt.hash(password, salt);
 
     const newTenant = {
+      orgName,
       name,
       email: normalizedEmail,
       password: hashedPwd,
@@ -215,8 +216,6 @@ const login = async (req, res) => {
         message: "Employer is not exists",
       });
     }
-
-    
 
 
     const isMatch = await bcrypt.compare(password, tenant.password);

@@ -8,7 +8,7 @@ const Profile = () => {
   })
 
   return (
-    <div className='shadow bg-surface p-5 rounded'>
+    <div className=''>
       {/* <h3 className='font-semibold'>Add a user for a new role</h3>
        */}
 
@@ -16,7 +16,7 @@ const Profile = () => {
 
       <form >
 
-        <div>
+        <div className='wrapper'>
           <Title title={"Basic Information"} />
           <div className='grid grid-cols-3 gap-5'>
 
@@ -78,7 +78,7 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className='mt-8'>
+        <div className='mt-4 wrapper'>
           <Title title={"Contact Information"} />
           <div className='grid grid-cols-3 gap-5'>
 
@@ -181,7 +181,7 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className='mt-8'>
+        <div className='mt-4 wrapper'>
           <Title title={"Legal & Compliance"} />
           <div className='grid grid-cols-3 gap-5'>
             {/* Company Registration No. */}

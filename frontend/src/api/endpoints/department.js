@@ -1,5 +1,9 @@
 export const DEPT_ENDPOINTS = {
-  CREATE: "/api/dept/create",
+  CREATEDEPT: "/api/dept/createDepartment",
+  DEPARTMENTS: "/api/dept/departments",
   CREATEPOSI: "/api/dept/createPosition",
-  LIST: "/api/dept/list",
+  POSITIONS: "/api/dept/positions",
+
+  USERDEPARTMENTS: "/api/dept/userDeptList",
+  USERPOSITIONS: "/api/dept/userPositionList",
 };

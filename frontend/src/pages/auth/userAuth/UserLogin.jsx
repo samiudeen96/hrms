@@ -1,11 +1,14 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { logo } from '../../assets/index.js';
-import IntroLottie from "../../components/lottie/IntroLottie.jsx"
-import Title from '../../components/Title.jsx';
+import { logo } from '../../../assets/index.js';
+import IntroLottie from "../../../components/lottie/IntroLottie.jsx"
+import Title from '../../../components/Title.jsx';
 import toast from 'react-hot-toast';
-import { getRedirectPathByRole } from "../../utils/helper.js"
-import { useUserLogin } from '../../hooks/userHook.js';
+import { getRedirectPathByRole } from "../../../utils/helper.js"
+import { useUserLogin } from '../../../hooks/userHook.js';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setRegisteredData } from '../../../redux/reducers/authSlice.js';
+import { useEmpProfile } from '../../../hooks/employeeHook.js';
 
 const UserLogin = () => {
 
@@ -17,7 +20,9 @@ const UserLogin = () => {
   }
 
   const [formData, setFormData] = useState(initialData)
-   const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { refetch: refetchEmpProfile } = useEmpProfile()
+  const dispatch = useDispatch()
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -26,20 +31,39 @@ const UserLogin = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+
     login.mutate(formData, {
-      onSuccess: (data) => {
-        console.log(data);
-        toast.success('Login successfully');
+      onSuccess: async (data) => {
+        toast.success("Login successfully");
         setFormData(initialData);
-        const redirectTo = getRedirectPathByRole(data.loggedData.role)
-        navigate(redirectTo);
+
+        try {
+          const { data: employeeProfile } = await refetchEmpProfile();
+
+          const redirectTo = employeeProfile
+            ? getRedirectPathByRole(data.loggedData.role)
+            : "/register";
+
+          if (employeeProfile) {
+            dispatch(setRegisteredData({ registeredInfo: employeeProfile }));
+            console.log("Employee Profile:", employeeProfile.uuid);
+          }
+
+          navigate(redirectTo);
+        } catch (err) {
+          console.error("Error fetching profile:", err);
+          toast.error("Failed to fetch employee profile.");
+        }
       },
+
       onError: (error) => {
-        const message = error?.response?.data?.message || error.message || "Something went wrong";
+        const message =
+          error?.response?.data?.message || error.message || "Something went wrong";
         toast.error(message);
-      }
-    })
-  }
+      },
+    });
+  };
+
 
   return (
     <div className='flex justify-center items-center min-h-screen'>

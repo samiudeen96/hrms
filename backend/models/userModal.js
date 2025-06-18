@@ -12,10 +12,19 @@ export default (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
+      tenant_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "tenants",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+      },
       sl_no: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true,
+        // unique: true,
       },
       role_id: {
         type: DataTypes.INTEGER,
@@ -34,10 +43,18 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
+      fullName: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          const first = this.getDataValue("firstName") || "";
+          const last = this.getDataValue("lastName") || "";
+          return `${capitalize(first)} ${capitalize(last)}`;
+        },
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        // unique: true,
       },
       password: {
         type: DataTypes.STRING,
@@ -54,6 +71,10 @@ export default (sequelize, DataTypes) => {
       tableName: "users",
     }
   );
+
+  function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }
 
   return User;
 };

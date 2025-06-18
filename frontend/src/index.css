@@ -27,20 +27,28 @@
 
   /* styles.css */
   .button_primary {
-    @apply px-5 bg-primary text-white rounded flex items-center gap-1 h-9;
+    @apply px-5 bg-primary text-white rounded flex items-center gap-1 h-9 max-w-fit bg-gradient-to-r from-[bg-primary] to-[#f7843d];
   }
 
   /* form */
   .label {
-    @apply block mb-1 text-xs font-medium text-gray-700;
+    @apply block mb-1 text-xs font-medium text-[#878787];
   }
 
-  .input{
-    @apply w-full bg-background sm:p-[10px] p-4 rounded-sm focus:outline-none
+  .input {
+    @apply w-full bg-[#f1f1f1] sm:p-[10px] p-4 rounded-sm focus:outline-none;
   }
 
-  .wrapper{
-    @apply shadow bg-surface p-5 rounded
+  .select_option {
+    @apply sm:ps-[2px] sm:pe-[10px] px-4 bg-gray-100 rounded-sm;
+  }
+
+  .wrapper {
+    @apply shadow bg-surface p-5 rounded;
+  }
+
+  .button_entry{
+    @apply w-30 h-30 rounded-full hover:shadow-lg text-white py-3 flex flex-col justify-center items-center
   }
 
   /* .button_primary {

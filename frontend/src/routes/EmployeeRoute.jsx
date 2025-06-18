@@ -1,8 +1,10 @@
-import { Route } from "react-router-dom";
 import Dashboard from "../pages/employee/Dashboard";
 import EmployeeLayout from "../layouts/EmployeeLayout";
 // import Signup from "../pages/auth/Signup";
 import PrivateRoute from '../routes/PrivateRoute';
+import SettingTab from "../pages/employee/setting/SettingTab";
+import { Route } from "react-router-dom";
+import AttendanceTab from "../pages/employee/attendance/AttendanceTab";
 
 const EmployeeRoute = () => {
     return (
@@ -16,6 +18,8 @@ const EmployeeRoute = () => {
             }>
 
             <Route path="dashboard" element={<Dashboard />} />
+            <Route path="attendance/*" element={<AttendanceTab />} />
+            <Route path="settings/*" element={<SettingTab />} />
         </Route>
     )
 }

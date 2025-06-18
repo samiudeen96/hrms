@@ -12,6 +12,15 @@ export default (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
+      tenant_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "tenants",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+      },
       dept_code: {
         type: DataTypes.STRING,
         allowNull: true, // Will be generated after creation
@@ -19,7 +28,7 @@ export default (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        // unique: true,
       },
       sub_name: {
         type: DataTypes.STRING(10),

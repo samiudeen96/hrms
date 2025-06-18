@@ -28,10 +28,10 @@ const Tabs = ({ tabs, basePath }) => {
         })}
       </div>
 
-      {location.pathname !== "/admin/user/add" &&
+      {/* {location.pathname !== "/admin/user/add" &&
         <Link to={'/admin/user/add'} className='button_primary'>
           <IoMdAdd className="w-5 h-5" /> <span>Add User</span>
-        </Link>}
+        </Link>} */}
 
     </div>
   );

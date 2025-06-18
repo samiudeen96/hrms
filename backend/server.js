@@ -5,6 +5,7 @@ import db from "./models/index.js";
 import userRouter from "./routes/userRoute.js";
 import tenantRouter from "./routes/tenantRouter.js";
 import deptRouter from "./routes/departmentRouter.js";
+import employeeRouter from "./routes/employeeRoute.js";
 dotenv.config();
 
 db.sequelize.sync(); // Create if not exists
@@ -26,9 +27,11 @@ app.get("/", (req, res) => {
 
 app.use("/api/tenant", tenantRouter);
 
-app.use("/api/user", userRouter)
+app.use("/api/user", userRouter);
 
-app.use("/api/dept", deptRouter)
+app.use("/api/dept", deptRouter);
+
+app.use("/api/employee", employeeRouter);
 
 const port = process.env.PORT;
 app.listen(port, () => {

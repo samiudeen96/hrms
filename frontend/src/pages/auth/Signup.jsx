@@ -40,7 +40,7 @@ const Signup = () => {
         createEmployer.mutate(formData, {
             onSuccess: () => {
                 setFormData(initialData);
-                navigate('/');
+                navigate('/admin/login');
             },
             onError: (error) => {
                 const message = error?.response?.data?.message || error.message || "Something went wrong";

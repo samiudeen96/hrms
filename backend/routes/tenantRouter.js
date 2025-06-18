@@ -4,6 +4,7 @@ import getAllRole from "../controllers/roleController.js";
 
 const tenantRouter = express.Router();
 
+
 tenantRouter.post("/signup", signup);
 // tenantRouter.post("/createUser", createUser);
 tenantRouter.post("/login", login);

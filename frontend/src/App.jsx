@@ -3,15 +3,28 @@ import { Toaster } from "react-hot-toast";
 import Signup from "./pages/auth/Signup";
 import Login from "./pages/auth/Login";
 import { getRedirectPathByRole } from "./utils/helper";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import InfoModal from "./components/InfoModal"
 import AdminRoute from "./routes/AdminRoute";
-import UserLogin from "./pages/auth/UserLogin";
 import EmployeeRoute from "./routes/EmployeeRoute";
 import HrRoute from "./routes/HrRoute";
+import UserLogin from "./pages/auth/userAuth/UserLogin";
+import Register from "./pages/auth/userAuth/Register";
+import { useEffect } from "react";
+import { setRegisteredData } from "./redux/reducers/authSlice";
+import { useEmpProfile } from "./hooks/employeeHook";
 
 function App() {
   const infoModal = useSelector(state => state.infoModal.isModalOpen)
+  const dispatch = useDispatch();
+  const { data: employeeProfile, isSuccess } = useEmpProfile();
+
+  useEffect(() => {
+    if (employeeProfile && isSuccess) {
+      dispatch(setRegisteredData({ registeredInfo: employeeProfile }));
+    }
+  }, [employeeProfile, isSuccess]);
+
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
@@ -19,14 +32,17 @@ function App() {
         <Routes>
           {/* Public Routes */}
           <Route path="/admin/signup" element={<Signup />} />
-          <Route path="/login" element={<UserLogin />} />
           <Route path="/admin/login" element={<Login />} />
+
+          <Route path="/login" element={<UserLogin />} />
+          <Route path="/register" element={<Register />} />
+
           <Route path="/" element={<Root />} />
 
           {/* Admin/Employer Routes */}
           {AdminRoute()}
 
-           {/* employee/Employee Routes */}
+          {/* employee/Employee Routes */}
           {EmployeeRoute()}
 
           {/* hr/Hr Routes */}
@@ -42,14 +58,22 @@ function App() {
 export default App;
 
 const Root = () => {
-  const { loggedData, isAuthenticated } = useSelector((state) => state.auth);
+  const { loggedData, isAuthenticated, storedRegisteredUuid } = useSelector((state) => state.auth);
+
+  console.log("strored uuid", storedRegisteredUuid);
+  const { data: employeeProfile } = useEmpProfile();
+
 
   if (!isAuthenticated || !loggedData?.role) {
     return <Navigate to="/login" replace />;
   }
 
-  const redirectTo = getRedirectPathByRole(loggedData?.role || "");
-  
+  const role = loggedData?.role || "";
+  let redirectTo = getRedirectPathByRole(role);
+
+  if (role !== "admin" && !storedRegisteredUuid) {
+    redirectTo = "/register";
+  }
 
   return <Navigate to={redirectTo} replace />;
 };

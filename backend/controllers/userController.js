@@ -7,11 +7,12 @@ import { Sequelize } from "sequelize";
 const { User, Role } = db;
 
 const createToken = (data) => {
-  return jwt.sign({ id: data.uuid, email: data.email }, process.env.JWT_SECRET);
+  return jwt.sign({ id: data.id, email: data.email }, process.env.JWT_SECRET);
 };
 
 const create = async (req, res) => {
-  // console.log(req.body);
+  // console.log(req.user);
+  const tenant_id = req.user.id;
   try {
     const { role_id, firstName, lastName, email, password, confirmPassword } =
       req.body;
@@ -34,7 +35,7 @@ const create = async (req, res) => {
 
     // Checking Employer with email already exists or not
     const existingUser = await User.findOne({
-      where: { email: normalizedEmail },
+      where: { tenant_id, email: normalizedEmail },
     });
 
     if (existingUser) {
@@ -63,6 +64,7 @@ const create = async (req, res) => {
     const hashedPwd = await bcrypt.hash(password, salt);
 
     const newUser = {
+      tenant_id,
       role_id,
       firstName,
       lastName,
@@ -75,6 +77,7 @@ const create = async (req, res) => {
     // const user = await User.create(newUser);
 
     const latestUser = await User.findOne({
+      where: { tenant_id },
       order: [["sl_no", "DESC"]],
     });
 
@@ -136,7 +139,7 @@ const login = async (req, res) => {
 
     const isMatch = await bcrypt.compare(password, user.password);
 
-    const name = `${user.firstName} ${user.lastName}`
+    const name = `${user.firstName} ${user.lastName}`;
 
     if (isMatch) {
       const token = createToken(user);
@@ -165,8 +168,10 @@ const login = async (req, res) => {
 };
 
 const list = async (req, res) => {
+  const tenant_id = req.user.id;
   try {
     const users = await User.findAll({
+      where: { tenant_id },
       attributes: {
         exclude: ["password"],
         include: [
@@ -218,3 +223,6 @@ const list = async (req, res) => {
 };
 
 export { create, list, login };
+
+
+

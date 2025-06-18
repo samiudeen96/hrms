@@ -8,6 +8,8 @@ import AdminLayout from '../layouts/AdminLayout';
 import UserTab from '../pages/admin/user/UserTab';
 import SettingTab from '../pages/admin/setting/SettingTab';
 import DepartmentTab from '../pages/admin/department/DepartmentTab';
+import AttendanceTab from '../pages/admin/attendance/AttendanceTab';
+import EmployeeTab from '../pages/admin/Employee/EmployeeTab';
 // import ProfileTab from '../pages/admin/profile/ProfileTab';
 
 
@@ -24,10 +26,12 @@ const AdminRoute = () => {
             }>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="user/*" element={<UserTab />} /> {/* Note the `*` here */}
+            <Route path="employee/*" element={<EmployeeTab />} />
 
             {/* <Route path="profile/*" element={<ProfileTab />} /> */}
             <Route path="settings/*" element={<SettingTab />} />
             <Route path="department/*" element={<DepartmentTab />} />
+            <Route path="attendance/*" element={<AttendanceTab />} />
         </Route>
     )
 }
