@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import Title from "../../../components/Title"
 import { useDeptList, useDptCreate, usePositionCreate } from '../../../hooks/deptHook';
 import { toast } from 'react-hot-toast';
-import { IoMdAdd } from "react-icons/io";
 
 
 const AddDepartment = () => {

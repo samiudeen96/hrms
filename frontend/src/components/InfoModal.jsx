@@ -1,10 +1,12 @@
 import { useInfoModal } from "../hooks/infoModalHook";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/reducers/authSlice";
+import { useQueryClient } from "@tanstack/react-query";
 
 const InfoModel = () => {
   const dispatch = useDispatch();
   const { isModalOpen, modalContent, hideModal } = useInfoModal();
+  const queryClient = useQueryClient();
 
   if (!isModalOpen) return null;
 
@@ -12,7 +14,9 @@ const InfoModel = () => {
     // Determine action based on `actionType`
     switch (modalContent.actionType) {
       case "logout":
+
         dispatch(logout());
+        queryClient.clear();
         break;
       // Add more cases if needed
       default:

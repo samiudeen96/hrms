@@ -59,6 +59,7 @@ export const roleMenus = {
         {
           name: "Attendance",
           icon: LiaCalendarCheckSolid,
+          path: "/admin/attendance/attendance",
           children: [
             { name: "Daily Attendance", path: "/admin/attendance/attendance" },
             { name: "Reports", path: "/admin/attendance/reports" },

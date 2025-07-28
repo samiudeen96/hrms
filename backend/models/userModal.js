@@ -24,7 +24,6 @@ export default (sequelize, DataTypes) => {
       sl_no: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        // unique: true,
       },
       role_id: {
         type: DataTypes.INTEGER,

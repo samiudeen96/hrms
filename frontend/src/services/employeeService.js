@@ -8,9 +8,8 @@ export const registerEmployeeFn = async (formData) => {
 
 export const employeeProfileFn = async () => {
   const res = await API.get(EMP_ENDPOINTS.PROFILE);
-  return res.data.empProfile;
+  if (res) return res.data.empProfile;
 };
-
 
 // admin
 export const createEmployeeFn = async (formData) => {

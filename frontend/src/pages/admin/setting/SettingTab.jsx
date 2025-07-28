@@ -12,7 +12,7 @@ const SettingTab = () => {
 
       <Routes>
         <Route path="profile" element={<Profile />} />
-        <Route path="branding" element={<Branding />} />
+        <Route path="theme" element={<Branding />} />
         <Route path="settings" element={<Settings />} />
 
         <Route index element={<Profile />} /> {/* default tab */}
@@ -23,7 +23,7 @@ const SettingTab = () => {
 
 const tabs = [
   { label: "Profile", path: "profile" },
-  { label: "Branding", path: "branding" },
+  { label: "Theme", path: "theme" },
   { label: "Settings", path: "settings" },
 ];
 

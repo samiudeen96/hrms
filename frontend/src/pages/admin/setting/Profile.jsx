@@ -13,7 +13,6 @@ const Profile = () => {
        */}
 
 
-
       <form >
 
         <div className='wrapper'>

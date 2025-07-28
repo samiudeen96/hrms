@@ -7,7 +7,7 @@ import { Sequelize } from "sequelize";
 const { User, Role } = db;
 
 const createToken = (data) => {
-  return jwt.sign({ id: data.id, email: data.email }, process.env.JWT_SECRET);
+  return jwt.sign({ id: data.id, tenant_id: data.tenant_id, email: data.email }, process.env.JWT_SECRET);
 };
 
 const create = async (req, res) => {
@@ -103,7 +103,7 @@ const create = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password  } = req.body;
 
     if (!email || !password) {
       return res.status(409).json({
@@ -122,7 +122,7 @@ const login = async (req, res) => {
     const normalizedEmail = email.trim().toLowerCase();
 
     const user = await User.findOne({
-      where: { email: normalizedEmail },
+      where: { email: normalizedEmail  },
       include: {
         model: Role,
         as: "role",
@@ -148,6 +148,7 @@ const login = async (req, res) => {
         token,
         loggedData: {
           uuid: user.uuid,
+          tenant_id: user.tenant_id,
           name: name,
           role: user.role.name,
           status: user.status,
@@ -223,6 +224,3 @@ const list = async (req, res) => {
 };
 
 export { create, list, login };
-
-
-
